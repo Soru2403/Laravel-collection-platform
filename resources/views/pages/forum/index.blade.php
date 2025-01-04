@@ -11,13 +11,20 @@
             @endauth
 
             <!-- Meklēšanas forma -->
-            <form method="GET" action="{{ route('forum.search') }}" class="mb-3"> <!-- Formas darbība tiek norādīta uz forum.search maršrutu -->
+            <form method="GET" action="{{ route('forum.search') }}" class="mb-3">
                 <div class="input-group">
                     <!-- Meklēšanas ievades lauks -->
                     <input type="text" name="query" class="form-control" placeholder="Meklēt pēc nosaukuma/atslēgvārdiem" value="{{ request('query') }}">
                     <button type="submit" class="btn btn-secondary">Meklēt</button>
                 </div>
             </form>
+
+            <!-- Ja ir meklēšanas teksts, rādām pogu, kas dzēš meklēšanas tekstu -->
+            @if(request('query'))
+                <form method="GET" action="{{ route('forum.search') }}" class="mt-3">
+                    <button type="submit" class="btn btn-danger">Notīrīt meklēšanu</button>
+                </form>
+            @endif
         </div>
 
         <!-- Labais stabiņš -->

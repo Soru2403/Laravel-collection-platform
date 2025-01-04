@@ -64,7 +64,7 @@ class AuthController extends Controller
 
         // Atgriež kļūdu, ja autentifikācija neizdevās
         return back()->withErrors([
-            'email' => 'Ievadītie dati neatbilst mūsu ierakstiem.',
+            'email' => 'Jūs ievadījāt nepareizu e-pasta adresi vai paroli.',
         ])->onlyInput('email');
     }
 

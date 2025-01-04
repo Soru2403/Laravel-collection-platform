@@ -46,26 +46,6 @@ class UserController extends Controller
         return redirect()->route('admin.dashboard')->with('success', 'Lietotājs veiksmīgi dzēsts.');
     }
     
-
-    // Maina lietotāja privilēģijas (tikai administrators)
-    public function changePrivileges(Request $request, $id)
-    {
-        // Pārbaudām, vai lietotājs ir administrators
-        if (!Auth::user()->isAdmin()) {
-            return redirect()->route('home')->with('error', 'Jums nav tiesību mainīt lietotāja privilēģijas!');
-        }
-    
-        $request->validate([
-            'is_admin' => 'required|boolean',
-        ]);
-    
-        $user = User::findOrFail($id);
-        $user->role = $request->is_admin ? 'admin' : 'user';  // Maina lietotāja lomu
-        $user->save();
-    
-        return redirect()->route('admin.dashboard')->with('success', 'Lietotāja privilēģijas veiksmīgi mainītas.');
-    }
-
     // Lietotāja profils
     public function profile()
     {

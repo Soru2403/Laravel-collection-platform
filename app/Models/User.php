@@ -31,52 +31,36 @@ class User extends Authenticatable
         ];
     }
 
-    /**
-     * Saņem visus lietotāja forumu ierakstus.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
+
+    //Saņem visus lietotāja forumu ierakstus.
     public function forumPosts()
     {
         return $this->hasMany(ForumPost::class);
     }
 
-    /**
-     * Pārbauda, vai lietotājs ir administrators.
-     * 
-     * @return bool
-     */
+
+    //Pārbauda, vai lietotājs ir administrators.
     public function isAdmin()
     {
         return $this->role === 'admin';  // Ja 'role' ir 'admin', atgriežam true, citādi false
     }
 
-    /**
-     * Lietotāja nosūtītie draudzības pieprasījumi.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
+
+    //Lietotāja nosūtītie draudzības pieprasījumi.
     public function sentFriendRequests()
     {
         return $this->hasMany(Friendship::class, 'user_id')->where('status', 'pending');
     }
 
-    /**
-     * Lietotāja saņemtie draudzības pieprasījumi.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
+
+    //Lietotāja saņemtie draudzības pieprasījumi.
     public function receivedFriendRequests()
     {
         // Saņem visus draudzības pieprasījumus, kas adresēti šim lietotājam un atrodas gaidīšanas statusā
         return $this->hasMany(Friendship::class, 'friend_id')->where('status', 'pending');
     }
 
-    /**
-     * Lietotāja draudzības attiecības.
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
+    //Lietotāja draudzības attiecības.
     public function friends()
     {
         return $this->hasMany(Friendship::class, 'user_id')
@@ -87,12 +71,7 @@ class User extends Authenticatable
                     });
     }
     
-
-    /**
-     * Draudzības attiecības (nosūtīti un saņemti pieprasījumi).
-     * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
+    //Draudzības attiecības (nosūtīti un saņemti pieprasījumi).
     public function friendships()
     {
         // Šis attiecība norāda visus draudzības pieprasījumus, ko lietotājs ir nosūtījis vai saņēmis
@@ -100,12 +79,7 @@ class User extends Authenticatable
                     ->orWhere('friend_id', $this->id);
     }
 
-    /**
-     * Palīdzīga funkcija, lai pārbaudītu, vai lietotājam ir draudzība ar citu lietotāju.
-     * 
-     * @param int $friendId
-     * @return bool
-     */
+    //Palīdzīga funkcija, lai pārbaudītu, vai lietotājam ir draudzība ar citu lietotāju.
     public function isFriendWith($friendId)
     {
         return $this->friends()->where(function($query) use ($friendId) {
@@ -114,33 +88,21 @@ class User extends Authenticatable
         })->exists();
     }
 
-    /**
-     * Palīdzīga funkcija, lai pārbaudītu, vai lietotājam ir nosūtīts draudzības pieprasījums.
-     * 
-     * @param int $friendId
-     * @return bool
-     */
+
+    //Palīdzīga funkcija, lai pārbaudītu, vai lietotājam ir nosūtīts draudzības pieprasījums.
     public function hasSentRequest($friendId)
     {
         return $this->sentFriendRequests()->where('friend_id', $friendId)->exists();
     }
 
-    /**
-     * Palīdzīga funkcija, lai pārbaudītu, vai lietotājam ir saņemts draudzības pieprasījums.
-     * 
-     * @param int $friendId
-     * @return bool
-     */
+    //Palīdzīga funkcija, lai pārbaudītu, vai lietotājam ir saņemts draudzības pieprasījums.
     public function hasReceivedRequest($friendId)
     {
         return $this->receivedFriendRequests()->where('user_id', $friendId)->exists();
     }
 
-    /**
-     * Draudzības saraksts, kuru lietotājs ir pieņēmis.
-     * 
-     * @return \Illuminate\Database\Eloquent\Collection
-     */
+
+    //Draudzības saraksts, kuru lietotājs ir pieņēmis.
     public function getFriendsListAttribute()
     {
         return User::whereIn('id', function ($query) {
@@ -156,5 +118,22 @@ class User extends Authenticatable
                             ->where('status', 'accepted')
                 );
         })->get();
+    }
+    public function collections()
+    {
+    return $this->hasMany(Collection::class);
+    }
+    public function exchanges()
+    {
+    return $this->hasMany(Exchange::class, 'user_id_1'); // или 'user_id_2', в зависимости от того, где используется id
+    }
+    public function exchangesAsUser1()
+    {
+        return $this->hasMany(Exchange::class, 'user_id_1');
+    }
+    
+    public function exchangesAsUser2()
+    {
+        return $this->hasMany(Exchange::class, 'user_id_2');
     }
 }

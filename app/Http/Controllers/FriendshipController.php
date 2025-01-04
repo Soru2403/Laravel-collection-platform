@@ -7,12 +7,8 @@ use App\Models\Friendship;
 
 class FriendshipController extends Controller
 {
-    /**
-     * Nosūta draudzības pieprasījumu.
-     * 
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+
+     //Nosūta draudzības pieprasījumu.
     public function sendRequest(Request $request)
     {
         // Validē ievades datus - pārbauda, vai friend_id pastāv datubāzē
@@ -34,12 +30,8 @@ class FriendshipController extends Controller
         return back()->with('success', 'Draudzības pieprasījums veiksmīgi nosūtīts!');
     }
 
-    /**
-     * Pieņem draudzības pieprasījumu.
-     * 
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
+
+    //Pieņem draudzības pieprasījumu.
     public function acceptRequest($id)
     {
         // Pārbaudām, vai pašreizējais lietotājs ir saņēmis šo draudzības pieprasījumu
@@ -67,13 +59,7 @@ class FriendshipController extends Controller
         return back()->with('success', 'Draudzības pieprasījums veiksmīgi pieņemts!');
     }
     
-
-    /**
-     * Dzēš draudzības pieprasījumu vai attiecības.
-     * 
-     * @param int $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
+    //Dzēš draudzības pieprasījumu vai attiecības.
     public function destroy($id)
     {
         // Mēs meklējam draudzības attiecību starp pašreizējo lietotāju un lietotāju ar ID $id

@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="back-button mb-3">
+    <a href="{{ url()->previous() }}" class="btn btn-secondary">Atpakaļ</a>
+</div>
 <h2>{{ $media->title }}</h2>
 
 <div class="row">

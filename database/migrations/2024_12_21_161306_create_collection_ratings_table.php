@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('collection_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->tinyInteger('rating')->unsigned()->comment('Оценка от 1 до 5'); 
+            $table->tinyInteger('rating')->unsigned()->comment('vērtējums no 1 līdz 5'); 
             $table->timestamps();
         });
     }

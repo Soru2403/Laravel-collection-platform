@@ -57,11 +57,6 @@
                 @endforeach
             </div>
         @endif
-
-        {{-- Administrators var pievienot jaunu mēdiju --}}
-        @if (auth()->check() && auth()->user()->role === 'admin')
-            <a href="{{ route('media.create') }}" class="btn btn-success mt-3">Pievienot jaunu mēdiju</a>
-        @endif
     </div>
 </div>
 @endsection

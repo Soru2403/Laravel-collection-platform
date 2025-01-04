@@ -8,11 +8,6 @@ use App\Models\ForumComment;
 
 class ForumController extends Controller
 {
-    // Konstruktoru var izmantot, lai inicializētu middleware vai citu loģiku
-    public function __construct()
-    {
-        // Ja nepieciešams, šeit var pievienot middleware, lai pārliecinātos, ka lietotājs ir autentificēts utt.
-    }
 
     // Foruma galvenā lapa — visi ieraksti
     public function index(Request $request)
@@ -207,6 +202,12 @@ class ForumController extends Controller
     // Ierakstu meklēšana pēc atslēgvārdiem un ieraksta nosaukumiem
     public function search(Request $request)
     {
+        // Ja nav ievadīts meklēšanas vaicājums, tad atgriežam atpakaļ uz sākuma lapu
+        if (!$request->has('query') || empty($request->query('query'))) {
+            return redirect()->route('forum.index'); // Pāradresē uz sākuma lapu, ja nav meklēšanas
+        }
+
+        // Pārbaudām, vai vaicājums ir derīgs
         $request->validate([
             'query' => 'required|string|min:3', // Pārbaudām, vai vaicājums ir derīgs
         ]);

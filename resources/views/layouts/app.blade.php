@@ -21,21 +21,22 @@
 
             <!-- Navigācijas saites -->
             <nav>
-                <a href="{{ route('collections.index') }}" class="ms-3 text-decoration-none text-primary">Collections</a>
-                <a href="{{ route('forum.index') }}" class="ms-3 text-decoration-none text-primary">Forum</a>
+                <a href="{{ route('collections.index') }}" class="ms-3 text-decoration-none text-primary">Kolekcijas</a>
+                <a href="{{ route('forum.index') }}" class="ms-3 text-decoration-none text-primary">Forums</a>
                 <a href="{{ route('media.index') }}" class="ms-3 text-decoration-none text-primary">Mēdiji</a>
+                <a href="{{ route('exchange.index') }}" class="ms-3 text-decoration-none text-primary">Apmaiņa</a>
             </nav>
 
             <!-- Lietotāja paneļa saites -->
             <div>
                 @guest
                     <!-- Ja lietotājs nav autentificēts -->
-                    <a href="{{ route('login') }}" class="ms-3 text-decoration-none text-primary">Log in</a>
-                    <a href="{{ route('register') }}" class="ms-3 text-decoration-none text-primary">Sign up</a>
+                    <a href="{{ route('login') }}" class="ms-3 text-decoration-none text-primary">Ieiet Colectio</a>
+                    <a href="{{ route('register') }}" class="ms-3 text-decoration-none text-primary">Izveidot jaunu kontu</a>
                 @else
                     <!-- Ja lietotājs ir autentificēts -->
-                    <a href="{{ route('profile') }}" class="ms-3 text-decoration-none text-primary">My Profile</a>
-                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="ms-3 text-decoration-none text-danger">Exit</a>
+                    <a href="{{ route('profile') }}" class="ms-3 text-decoration-none text-primary">Mans Profils</a>
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="ms-3 text-decoration-none text-danger">Iziet</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>

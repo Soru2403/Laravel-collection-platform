@@ -9,7 +9,7 @@
             <!-- Formas sākums -->
             <form method="POST" action="{{ route('forum.update', $post->id) }}">
                 @csrf
-                @method('PUT') <!-- Šī metode tiek izmantota, lai norādītu, ka mēs veicam POST pieprasījumu, kas faktiski atjaunina ierakstu -->
+                @method('PUT') 
                 
                 <div class="mb-3">
                     <label for="title" class="form-label">Nosaukums</label>
